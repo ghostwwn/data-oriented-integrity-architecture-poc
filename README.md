@@ -70,13 +70,10 @@ Decision Gate
 ▼
 Enforcement
 
-The PoC exists solely to make this dependency visible.
+## Exploratory Artifacts
 
----
+Files under `docs/` may include non-operational research artifacts
+used to communicate architectural ideas during collaboration.
 
-## Example Decision Pattern (Illustrative Only)
-
-```asm
-BL   get_integrity_state
-CMP  W0, #0
-B.NE violation
+These artifacts are intentionally incomplete, non-executable,
+and omit all runtime or deployment details.
