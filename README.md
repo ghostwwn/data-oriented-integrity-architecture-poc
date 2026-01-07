@@ -59,3 +59,24 @@ Any operational details are **deliberately omitted**.
 
 ## Simplified Architectural Flow
 
+Integrity Measurement
+│
+▼
+Program State
+│
+▼
+Decision Gate
+│
+▼
+Enforcement
+
+The PoC exists solely to make this dependency visible.
+
+---
+
+## Example Decision Pattern (Illustrative Only)
+
+```asm
+BL   get_integrity_state
+CMP  W0, #0
+B.NE violation
