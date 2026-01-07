@@ -1,0 +1,67 @@
+/*
+ * NOTE: NON-OPERATIONAL RESEARCH SNIPPET
+ *
+ * This snippet is included for architectural discussion only.
+ * It is intentionally incomplete and not intended to be compiled,
+ * executed, or adapted for use against real-world applications.
+ *
+ * Purpose:
+ *   To illustrate the class of lightweight, block-level instrumentation
+ *   that researchers may explore when studying execution behavior.
+ *
+ * Explicitly excluded:
+ *   - Thread selection
+ *   - Attachment logic
+ *   - Runtime coordination
+ *   - Performance safeguards
+ *   - Any real deployment context
+ *
+ * This file exists solely to support discussion among collaborators.
+ */
+
+#include <gum/gumstalker.h>
+
+/*
+ * Minimal data structure used to reason about
+ * per-block observation of program counters.
+ */
+typedef struct {
+    gpointer address;
+} TraceEntry;
+
+/*
+ * Simplified ring buffer used as an illustrative
+ * data sink. Concurrency and safety concerns
+ * are intentionally not addressed.
+ */
+#define MAX_ENTRIES 10000
+static TraceEntry buffer[MAX_ENTRIES];
+static volatile int idx = 0;
+
+/*
+ * Conceptual callback representing a per-block
+ * observation point. This is not wired to any
+ * real execution context.
+ */
+void on_block(GumCpuContext *cpu_context, gpointer user_data) {
+    int i = idx;
+    buffer[i].address = (gpointer) cpu_context->pc;
+    idx = (i + 1) % MAX_ENTRIES;
+}
+
+/*
+ * Accessors included purely to illustrate how
+ * collected state might be exposed for analysis.
+ */
+gpointer get_buffer(void) {
+    return buffer;
+}
+
+int get_index(void) {
+    return idx;
+}
+
+/*
+ * Any runtime integration, attachment logic,
+ * or execution control is deliberately omitted.
+ */
